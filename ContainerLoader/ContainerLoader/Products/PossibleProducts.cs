@@ -12,6 +12,8 @@ public enum PossibleProducts
     Cheese,
     Sausages,
     Butter,
-    Eggs
+    Eggs,
+    Milk,
+    Petrol
 
 }

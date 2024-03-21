@@ -6,9 +6,11 @@ namespace ContainerLoader.Containers;
 
 public class LiquidContainer : Container, IHazardNotifier
 {
-    public LiquidContainer(int height, int tareWeight, int depth, string serialNumber, int maxPayload)
-        : base(height, tareWeight, depth, serialNumber, maxPayload)
+    public LiquidContainer(double height, double tareWeight, double depth,  double maxPayload)
+        : base(height, tareWeight, depth,  maxPayload)
     {
+        SerialNumber = "KON-L-" + IdSetter;
+        IdSetter++;
     }
 
     public override void Load(Product addedProduct)
@@ -49,5 +51,16 @@ public class LiquidContainer : Container, IHazardNotifier
     public void NotifyHazard(string message)
     {
         Console.WriteLine("Hazardous situation for the liquid container with id:" + SerialNumber + "\n" + message);
+    }
+    
+    public override string? ToString()
+    {
+        string info = "Serial number: " + SerialNumber + "\n" +
+                      "Height: " + Height + " cm\n" +
+                      "Tare Weight: " + TareWeight + " kg\n" +
+                      "Depth: " + Depth + " cm\n" +
+                      "Maximum Payload: " + MaxPayload + " kg\n" +
+                      "Cargo Mass: " + CargoMass + " kg\n";
+        return info;
     }
 }

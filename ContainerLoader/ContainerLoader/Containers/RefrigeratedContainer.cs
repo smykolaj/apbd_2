@@ -7,13 +7,14 @@ namespace ContainerLoader.Containers;
 
 public class RefrigeratedContainer : Container
 {
-    public PossibleProducts ProductType { get; private set; }
-    public double Temperature { get; private set; }
+    public PossibleProducts ProductType { get;  set; }
+    public double Temperature { get;  set; }
 
-    public RefrigeratedContainer(int height, int tareWeight, int depth, string serialNumber, int maximumPayload,
-        string productType, double temperature)
-        : base(height, tareWeight, depth, serialNumber, maximumPayload)
+    public RefrigeratedContainer(double height, double tareWeight, double depth, double maximumPayload, double temperature)
+        : base(height, tareWeight, depth,  maximumPayload)
     {
+        SerialNumber = "KON-C-" + IdSetter;
+        IdSetter++;
         Temperature = temperature;
     }
 
@@ -27,20 +28,17 @@ public class RefrigeratedContainer : Container
             throw new OverfillException(
                 "The product you are trying to add exceeds the max payload for container +" +
                 SerialNumber);
+        
         if (CargoMass == 0)
             ProductType = addedProduct.Name;
         
         if (Temperature < TemperatureMapping[addedProduct.Name] )
-        {
-            throw new 
-        }
-
+            throw new BadTemperatureException();
+        
         if (ProductType != addedProduct.Name)
             throw new ProductNameMismatchException();
 
-       
-        
-        
+        CargoMass += addedProduct.Weight;
 
     }
 
@@ -50,15 +48,23 @@ public class RefrigeratedContainer : Container
         CargoMass = 0;
     }
 
-    // Set or update the temperature of the refrigerated container
-    // You can add logic here to ensure the temperature is not lower than required for the product type
-    public void SetTemperature(int newTemperature)
+    public override string? ToString()
     {
-        Temperature = newTemperature;
+        string info = "Serial number: " + SerialNumber + "\n" +
+                      "Height: " + Height + " cm\n" +
+                      "Tare Weight: " + TareWeight + " kg\n" +
+                      "Depth: " + Depth + " cm\n" +
+                      "Maximum Payload: " + MaxPayload + " kg\n" +
+                      "Cargo Mass: " + CargoMass + " kg\n" +
+                      "Temperature: " + Temperature + " Cº\n" +
+                      "Stored product: " + ProductType;
+    return info;
     }
 
+    
+
     public static readonly Dictionary<PossibleProducts, double> TemperatureMapping =
-        new Dictionary<PossibleProducts, double>
+        new()
         {
             { PossibleProducts.Bananas, 13.3 },
             { PossibleProducts.Chocolate, 18 },

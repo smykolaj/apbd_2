@@ -8,9 +8,11 @@ public class GasContainer : Container, IHazardNotifier
     public double Pressure { get;set; } 
 
    
-    public GasContainer(int height, int tareWeight, int depth, string serialNumber, int maximumPayload, double pressure)
-        : base(height, tareWeight, depth, serialNumber, maximumPayload)
+    public GasContainer(double height, double tareWeight, double depth, double maximumPayload, double pressure)
+        : base(height, tareWeight, depth, maximumPayload)
     {
+        SerialNumber = "KON-G-" + IdSetter;
+        IdSetter++;
         Pressure = pressure;
     }
 
@@ -39,5 +41,17 @@ public class GasContainer : Container, IHazardNotifier
     public void NotifyHazard(string message)
     {
         Console.WriteLine("Hazardous situation for the gas container with id:" + SerialNumber + "\n" + message);
+    }
+
+    public override string? ToString()
+    {
+        string info = "Serial number: " + SerialNumber + "\n" +
+                      "Height: " + Height + " cm\n" +
+                      "Tare Weight: " + TareWeight + " kg\n" +
+                      "Depth: " + Depth + " cm\n" +
+                      "Maximum Payload: " + MaxPayload + " kg\n" +
+                      "Cargo Mass: " + CargoMass + " kg\n" +
+                      "Pressure: " + Pressure + "atmospheres";
+        return info;
     }
 }
