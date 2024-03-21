@@ -41,7 +41,7 @@ public class Ship
         if (containerToLoad.CargoMass + containerToLoad.TareWeight + GetWeightOfAllContainers() > MaxWeight*1000)
             throw new ContainerTooHeavyException();
         transportedContainers.Add(containerToLoad);
-        Console.WriteLine("Container " + containerToLoad.SerialNumber + "loaded to the ship successfully");
+        Console.WriteLine("Container " + containerToLoad.SerialNumber + " loaded to the ship successfully");
     }
     
     public void LoadListOfContainers(List<Container> containersToLoad)
@@ -96,7 +96,8 @@ public class Ship
         if (index != -1)
         {
             transportedContainers[index] = newContainer;
-            Console.WriteLine("Container replaced successfully!");
+            Console.WriteLine("Container " + serialNumber + " replaced successfully by " + newContainer.SerialNumber );
+            return;
         }
         Console.WriteLine("Couldnt find an id of a container for replacement.");
         
@@ -117,7 +118,30 @@ public class Ship
     {
         Console.WriteLine(this);
     }
-    
+
+    public void PrintAllContainers()
+    {
+        foreach (var container in transportedContainers)
+        {
+            Console.WriteLine(container);
+        }
+    }
+
+    public void TransferContainerToOtherShip(String serialNumber, Ship otherShip)
+    { 
+        foreach (var container in transportedContainers)
+        {
+            if (container.SerialNumber.Equals(serialNumber))
+            {
+                try{otherShip.LoadContainer(container);}
+                catch(Exception e){return;}
+                RemoveContainer(container.SerialNumber);
+                return;
+            }
+           
+        }
+    }
+
     public override string? ToString()
     {
         string info = "Speed: " + Speed + " knots\n" +

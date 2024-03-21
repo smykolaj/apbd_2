@@ -14,6 +14,7 @@ public enum PossibleProducts
     Butter,
     Eggs,
     Milk,
-    Petrol
+    Petrol,
+    Oxygen
 
 }

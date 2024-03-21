@@ -55,12 +55,14 @@ public class LiquidContainer : Container, IHazardNotifier
     
     public override string? ToString()
     {
-        string info = "Serial number: " + SerialNumber + "\n" +
+        string info = "________________________________________________\n"
+                      + "Serial number: " + SerialNumber + "\n" +
                       "Height: " + Height + " cm\n" +
                       "Tare Weight: " + TareWeight + " kg\n" +
                       "Depth: " + Depth + " cm\n" +
                       "Maximum Payload: " + MaxPayload + " kg\n" +
-                      "Cargo Mass: " + CargoMass + " kg\n";
+                      "Cargo Mass: " + CargoMass + " kg\n" + 
+                      "________________________________________________";
         return info;
     }
 }
